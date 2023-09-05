@@ -1,7 +1,20 @@
 class Collectie:
-    def __init__(self, collectie=None):
-        self.collectie = collectie
+    collectie = {
+        "Functie": "",
+        "Algoritme": "",
+        "IDE": "",
+        "Loop": "",
+        "Dictionary": "pietje bell",
+        "List": "",
+        "Conditie": "",
+        "Recursie": ""
+    }
 
+    # Initializes the collection
+    def __init__(self, collectie=None):
+        self.collectie = collectie if collectie is not None else self.collectie
+
+    # Searches for the output of the input and compares them to what is stored within the collection
     def searchTerm(self):
         term = input("Welke term zoekt u? ")
         omschrijving = self.collectie.get(term)
@@ -11,6 +24,7 @@ class Collectie:
         else:
             print("Term niet gevonden")
 
+    # Removes the provided term in the collection
     def removeTerm(self):
         print("Termen en Omschrijvingen:")
         for term, omschrijving in self.collectie.items():
@@ -20,11 +34,13 @@ class Collectie:
             del self.collectie[term]
             print(f"Term {term} is verwijdert.")
 
-    def returnAll(self, ):
+    # Returns the collection in a format
+    def returnAll(self):
         print("Termen en Omschrijvingen:")
         for term, omschrijving in self.collectie.items():
             print(f"Term: {term}, Omschrijving: {omschrijving}")
 
+    # Adds a new collection
     def addTerm(self):
         term = (input("Geef hier de term: "))
         omschrijving = (str(input("Geef hier de omschrijving van de term: ")))
@@ -59,18 +75,7 @@ class Collectie:
 
 
 def main():
-    standaard_collectie = {
-        "Functie": "",
-        "Algoritme": "",
-        "IDE": "",
-        "Loop": "",
-        "Dictionary": "pietje bell",
-        "List": "",
-        "Conditie": "",
-        "Recursie": ""
-    }
-
-    collectie = Collectie(standaard_collectie)
+    collectie = Collectie()
     collectie.keuzeMenu()
 
 
