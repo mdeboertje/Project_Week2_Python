@@ -1,5 +1,8 @@
+import json
+
+
 class Collectie:
-    collectie = {
+    DEFAULT_COLLECTIE = {
         "Functie": "",
         "Algoritme": "",
         "IDE": "",
@@ -11,8 +14,18 @@ class Collectie:
     }
 
     # Initializes the collection
-    def __init__(self, collectie=None):
-        self.collectie = collectie if collectie is not None else self.collectie
+    def __init__(self):
+        self.load_collection()
+    def load_collection(self):
+        try:
+            with open("collectie.json", "r") as file:
+                self.collectie = json.load(file)
+        except FileNotFoundError:
+            self.collectie = self.DEFAULT_COLLECTIE
+
+    def save_collection(self):
+        with open("collectie.json", "w") as file:
+            json.dump(self.collectie, file, indent=4)
 
     # Searches for the output of the input and compares them to what is stored within the collection
     def searchTerm(self):
@@ -41,42 +54,45 @@ class Collectie:
             print(f"Term: {term}, Omschrijving: {omschrijving}")
 
     # Adds a new collection
-    def addTerm(self):
-        term = (input("Geef hier de term: "))
-        omschrijving = (str(input("Geef hier de omschrijving van de term: ")))
+    def add_term(self):
+        term = input("Geef hier de term: ")
+        omschrijving = input("Geef hier de omschrijving van de term: ")
 
         self.collectie[term] = omschrijving
-        self.keuzeMenu()
+        self.save_collection()
+        print(f"Term '{term}' is toegevoegd met omschrijving '{omschrijving}'")
 
     #
-    def keuzeMenu(self):
-        choice = input(
-            "Welke keuze wilt u maken?\n"
-            "Keuzen uit \n"
-            "1. Zoeken \n"
-            "2. Alles weergeven \n"
-            "3. Toevoegen \n"
-            "4. Verwijderen \n"
-            "5. Sluiten \n")
-        match choice:
-            case "Zoeken" | "1":
+    def menu(self):
+        while True:
+            choice = input(
+                "Welke keuze wilt u maken?\n"
+                "1. Zoeken\n"
+                "2. Alles weergeven\n"
+                "3. Toevoegen\n"
+                "4. Verwijderen\n"
+                "5. Sluiten\n"
+                "Uw keuze: "
+            )
+            if choice == "1":
                 self.searchTerm()
-            case "Alles weergeven" | "2":
+            elif choice == "2":
                 self.returnAll()
-            case "Toevoegen" | "3":
-                self.addTerm()
-            case "Verwijderen" | "4":
+            elif choice == "3":
+                self.add_term()
+            elif choice == "4":
                 self.removeTerm()
-            case "Sluiten" | "5":
+            elif choice == "5":
                 print("Tot ziens!")
-            case _:
-                print("Ongeldige keuze. Probeer opnieuw")
-                self.keuzeMenu()
+                break
+            else:
+                print("Ongeldige keuze. Probeer opnieuw.")
+
 
 
 def main():
     collectie = Collectie()
-    collectie.keuzeMenu()
+    collectie.menu()
 
 
 if __name__ == '__main__':

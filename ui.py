@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import simpledialog
 
+
 class CollectieUI:
     def __init__(self, root):
         self.collectie = {
@@ -21,7 +22,7 @@ class CollectieUI:
     def search_term(self):
         ant = self.entry.get()
         omschrijving = self.collectie.get(ant)
-        self.display_result(f"Term: {ant}\n\nOmschrijving: {omschrijving if omschrijving else 'Term niet gevonden'}")
+        self.display_result(f"Term: {ant}nOmschrijving: {omschrijving if omschrijving else 'Term niet gevonden'}")
 
     def return_all(self):
         result = "Termen en Omschrijvingen:\n\n"
